@@ -64,7 +64,7 @@ def get_dataset(
 
 def get_train_valid_test_set(
     config: TrainConfig,
-) -> tuple[
+) -> Tuple[
     datasets.VisionDataset, Optional[datasets.VisionDataset], datasets.VisionDataset
 ]:
     train_set, test_set = get_dataset(config=config)

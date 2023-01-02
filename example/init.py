@@ -1,6 +1,6 @@
 import random
 from datetime import datetime
-from typing import Callable, List, Optional, Union
+from typing import Callable, List, Optional, Union, Dict
 
 import numpy as np
 import torch
@@ -51,7 +51,7 @@ def init(config: TrainConfig) -> None:
     set_seeds(config.seed)
 
 
-def log_results(accuracies: dict[str, float], global_step: int, suffix: str = ""):
+def log_results(accuracies: Dict[str, float], global_step: int, suffix: str = ""):
     wandb.log(
         {
             "global_step": global_step,
@@ -106,7 +106,7 @@ class NoneScheduler:
     def step(self) -> None:
         pass
 
-    def get_last_lr(self) -> list[float]:
+    def get_last_lr(self) -> List[float]:
         return [group["lr"] for group in self.optimizer.param_groups]
 
 
