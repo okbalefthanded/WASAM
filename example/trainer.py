@@ -13,6 +13,7 @@ from example.init import (get_criterion, get_device, get_lr_scheduler,
                           get_model, get_optimizer, init_wandb_results)
 from example.optimization_step import optimization_step
 from swa_utils import MultipleSWAModels
+from typing import Dict
 
 
 class Trainer:
@@ -106,10 +107,12 @@ class Trainer:
                 model=model,
                 file_name=f"best_valid{suffix}.pth",
             )
-            log_metrics |= {f"test{suffix}": test_metrics, "epoch": self.epoch}
+            # log_metrics |= {f"test{suffix}": test_metrics, "epoch": self.epoch}
+            log_metrics.update({f"test{suffix}": test_metrics, "epoch": self.epoch})
             wandb.run.summary[f"valid{suffix}_best_acc"] = val_metrics["acc"]
             wandb.run.summary[f"test{suffix}_best_acc"] = test_metrics["acc"]
-        log_metrics |= {f"valid{suffix}": val_metrics, "epoch": self.epoch}
+        # log_metrics |= {f"valid{suffix}": val_metrics, "epoch": self.epoch}
+        log_metrics.update({f"valid{suffix}": val_metrics, "epoch": self.epoch})
         self.log_metrics(log_metrics)
         model.train()
 
@@ -152,7 +155,7 @@ class Trainer:
         self,
         model: torch.nn.Module,
         loader: torch.utils.data.DataLoader,
-    ) -> dict[str, float]:
+    ) -> Dict[str, float]:
         """Computes loss and acc for given dataloader."""
         model.eval()
         total_loss, total_acc = 0.0, 0.0
