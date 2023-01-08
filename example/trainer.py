@@ -3,7 +3,7 @@ from typing import Optional
 
 import torch
 import wandb
-from init import get_starting_time, init, optimizer_to
+from example.init import get_starting_time, init, optimizer_to
 from torch.optim.swa_utils import update_bn
 from tqdm import tqdm
 

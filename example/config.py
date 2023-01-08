@@ -2,7 +2,7 @@ import argparse
 import dataclasses
 from typing import List
 
-from models import MODELS
+from example.models import MODELS
 
 
 @dataclasses.dataclass
